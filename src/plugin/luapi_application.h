@@ -14,6 +14,8 @@
 #include "control/Control.h"
 #include "control/PageBackgroundChangeController.h"
 #include "control/pagetype/PageTypeHandler.h"
+#include "gui/XournalView.h"
+#include "model/Stroke.h"
 
 #include "StringUtils.h"
 #include "XojMsgBox.h"
@@ -115,6 +117,102 @@ static int applib_registerUi(lua_State* L) {
 }
 
 /**
+ * Puts the width and height of the page/selection onto the
+ * stack
+ */
+static int applib_pushWidthAndHeight(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    std::string type = luaL_checkstring(L, 1);
+    Control* control = plugin->getControl();
+    double width = 0;
+    double height = 0;
+
+    if (type == "Layer") {
+        width = control->getCurrentPage()->getWidth();
+        height = control->getCurrentPage()->getHeight();
+    } else if (type == "Selection") {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (sel) {
+            width = sel->getWidth();
+            height = sel->getHeight();
+        } else {
+            g_warning("There is no selection! ");
+            return 0;
+        }
+    } else {
+        g_warning("Unknown argument: %s", type.c_str());
+        return 0;
+    }
+    lua_pushnumber(L, width);
+    lua_pushnumber(L, height);
+    return 2;
+}
+
+/**
+ * Puts a Lua Table of the coordinates of the points of all strokes from the selected layer/selection tool onto the
+ * stack
+ */
+static int applib_pushStrokes(lua_State* L) {
+    Plugin* plugin = Plugin::getPluginFromLua(L);
+    std::string type = luaL_checkstring(L, 1);
+    std::vector<Element*> elements = {};
+    Control* control = plugin->getControl();
+
+    if (type == "Layer") {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (sel) {
+            control->clearSelection();  // otherwise strokes in the selection won't be recognized
+        }
+        elements = *control->getCurrentPage()->getSelectedLayer()->getElements();
+    } else if (type == "Selection") {
+        auto sel = control->getWindow()->getXournal()->getSelection();
+        if (sel) {
+            elements = *sel->getElements();
+        } else {
+            g_warning("There is no selection, from which text could be recognized! ");
+            return 0;
+        }
+    } else {
+        g_warning("Unknown argument: %s", type.c_str());
+        return 0;
+    }
+
+    lua_newtable(L);
+    int currStrokeNo = 0;
+    int currPointNo = 0;
+
+    for (Element* e: elements) {
+        if (e->getType() == ELEMENT_STROKE) {
+            auto* s = dynamic_cast<Stroke*>(e);
+            lua_pushnumber(L, ++currStrokeNo);  // stroke
+            lua_newtable(L);
+
+            lua_pushnumber(L, 1);  // x-coordinates
+            lua_newtable(L);
+            for (auto p: s->getPointVector()) {
+                lua_pushnumber(L, ++currPointNo);
+                lua_pushnumber(L, p.x);
+                lua_settable(L, -3);
+            }
+            lua_settable(L, -3);
+            currPointNo = 0;
+
+            lua_pushnumber(L, 2);  // y-coordinates
+            lua_newtable(L);
+            for (auto p: s->getPointVector()) {
+                lua_pushnumber(L, ++currPointNo);
+                lua_pushnumber(L, p.y);
+                lua_settable(L, -3);
+            }
+            lua_settable(L, -3);
+            lua_settable(L, -3);
+            currPointNo = 0;
+        }
+    }
+    return 1;
+}
+
+/**
  * Execute an UI action (usually internal called from Toolbar / Menu)
  */
 static int applib_uiAction(lua_State* L) {
@@ -201,7 +299,8 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"uiAction", applib_uiAction},
                                   {"uiActionSelected", applib_uiActionSelected},
                                   {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
-
+                                  {"pushStrokes", applib_pushStrokes},
+                                  {"pushWidthAndHeight", applib_pushWidthAndHeight},
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
 
