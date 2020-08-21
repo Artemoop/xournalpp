@@ -32,9 +32,9 @@ auto TextView::initPango(cairo_t* cr, Text* t) -> PangoLayout* {
 
 void TextView::updatePangoFont(PangoLayout* layout, Text* t) {
     PangoFontDescription* desc = pango_font_description_from_string(t->getFont().getName().c_str());
-    // pango_font_description_set_absolute_size(desc, t->getFont().getSize() * PANGO_SCALE);
-    pango_font_description_set_size(desc, t->getFont().getSize() * PANGO_SCALE);
-
+    // pango_font_description_set_size(desc, t->getFont().getSize() * PANGO_SCALE);
+    pango_font_description_set_absolute_size(desc, t->getFont().getSize() * PANGO_SCALE);
+    pango_layout_set_line_spacing(layout, 1.0);
     pango_layout_set_font_description(layout, desc);
     pango_font_description_free(desc);
 }
@@ -80,7 +80,7 @@ auto TextView::findText(Text* t, string& search) -> vector<XojPdfRectangle> {
             mark.x1 = (static_cast<double>(rect.x)) / PANGO_SCALE + t->getX();
             mark.y1 = (static_cast<double>(rect.y)) / PANGO_SCALE + t->getY();
 
-            pango_layout_index_to_pos(layout, pos + srch.length(), &rect);
+            pango_layout_index_to_pos(layout, pos + srch.length() - 1, &rect);
             mark.x2 = (static_cast<double>(rect.x) + rect.width) / PANGO_SCALE + t->getX();
             mark.y2 = (static_cast<double>(rect.y) + rect.height) / PANGO_SCALE + t->getY();
 
