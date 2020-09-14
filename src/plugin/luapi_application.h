@@ -120,7 +120,7 @@ static int applib_registerUi(lua_State* L) {
  * Puts the width and height of the page/selection onto the
  * stack
  */
-static int applib_pushWidthAndHeight(lua_State* L) {
+static int applib_getWidthAndHeight(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     std::string type = luaL_checkstring(L, 1);
     Control* control = plugin->getControl();
@@ -152,7 +152,7 @@ static int applib_pushWidthAndHeight(lua_State* L) {
  * Puts a Lua Table of the coordinates of the points of all strokes from the selected layer/selection tool onto the
  * stack
  */
-static int applib_pushStrokes(lua_State* L) {
+static int applib_getStrokes(lua_State* L) {
     Plugin* plugin = Plugin::getPluginFromLua(L);
     std::string type = luaL_checkstring(L, 1);
     std::vector<Element*> elements = {};
@@ -299,8 +299,8 @@ static const luaL_Reg applib[] = {{"msgbox", applib_msgbox},
                                   {"uiAction", applib_uiAction},
                                   {"uiActionSelected", applib_uiActionSelected},
                                   {"changeCurrentPageBackground", applib_changeCurrentPageBackground},
-                                  {"pushStrokes", applib_pushStrokes},
-                                  {"pushWidthAndHeight", applib_pushWidthAndHeight},
+                                  {"getStrokes", applib_getStrokes},
+                                  {"getWidthAndHeight", applib_getWidthAndHeight},
                                   // Placeholder
                                   //	{"MSG_BT_OK", nullptr},
 

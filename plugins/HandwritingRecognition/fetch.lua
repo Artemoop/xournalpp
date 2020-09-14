@@ -5,9 +5,13 @@ local json = require("json")
 
 function sendRequest(strokes, lang, width, height)
   local path = "https://www.google.com/inputtools/request?ime=handwriting&app=mobilesearch&cs=1&oe=UTF-8"
-  
+
+  if #strokes>150 then 
+    print("Number of strokes N = " .. #strokes .. " is greater than 150, the maximal number of strokes that can be processed. Only the first 150 strokes will be used. \n")
+    strokes = { table.unpack(strokes,1,150) }
+  end
+
   local tbl = {
-    options = "enable_pre_space",
     requests = {
        {
         writing_guide = {
