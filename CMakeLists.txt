@@ -365,7 +365,7 @@ if (${PACKAGE_ARCH} STREQUAL "x86_64")
 	set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 endif()
 
-if(CPACK_GENERATOR STREQUAL "DEB")
+if(CPACK_GENERATOR MATCHES "DEB")
 	message("Preparing documentation for DEB package")
 	add_custom_target(package_documentation ALL)
 
