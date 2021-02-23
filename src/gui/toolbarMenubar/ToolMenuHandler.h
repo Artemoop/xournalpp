@@ -49,11 +49,11 @@ public:
 
     void initToolItems();
 
-    void setUndoDescription(const string& description);
-    void setRedoDescription(const string& description);
+    void setUndoDescription(const std::string& description);
+    void setRedoDescription(const std::string& description);
 
     SpinPageAdapter* getPageSpinner();
-    void setPageText(const string& text);
+    void setPageText(const std::string& text);
 
     void setFontButtonFont(XojFont& font);
     XojFont getFontButtonFont();
@@ -67,7 +67,7 @@ public:
 
     ToolbarModel* getModel();
 
-    vector<AbstractToolItem*>* getToolItems();
+    std::vector<AbstractToolItem*>* getToolItems();
 
     bool isColorInUse(Color color);
 
@@ -87,11 +87,11 @@ private:
     void initEraserToolItem();
 
 private:
-    vector<ColorToolItem*> toolbarColorItems;
+    std::vector<ColorToolItem*> toolbarColorItems;
     GtkWindow* parent = nullptr;
 
-    vector<AbstractToolItem*> toolItems;
-    vector<MenuItem*> menuItems;
+    std::vector<AbstractToolItem*> toolItems;
+    std::vector<MenuItem*> menuItems;
 
     ToolButton* undoButton = nullptr;
     ToolButton* redoButton = nullptr;

@@ -4,7 +4,7 @@
 
 int ToolbarItem::sid = 0;
 
-ToolbarItem::ToolbarItem(string name) {
+ToolbarItem::ToolbarItem(std::string name) {
     this->name = std::move(name);
     this->id = ToolbarItem::sid++;
 
@@ -25,7 +25,7 @@ ToolbarItem::ToolbarItem() {
 
 ToolbarItem::~ToolbarItem() = default;
 
-auto ToolbarItem::getName() -> string { return this->name; }
+auto ToolbarItem::getName() -> std::string { return this->name; }
 
 auto ToolbarItem::operator==(ToolbarItem& other) -> bool { return this->name == other.name; }
 

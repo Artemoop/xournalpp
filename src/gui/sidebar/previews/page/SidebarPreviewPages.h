@@ -18,7 +18,6 @@
 
 #include "gui/sidebar/previews/base/SidebarPreviewBase.h"
 
-#include "XournalType.h"
 
 class SidebarPreviewPages: public SidebarPreviewBase {
 public:
@@ -36,12 +35,12 @@ public:
     /**
      * @overwrite
      */
-    virtual string getName();
+    virtual std::string getName();
 
     /**
      * @overwrite
      */
-    virtual string getIconName();
+    virtual std::string getIconName();
 
     /**
      * Update the preview images

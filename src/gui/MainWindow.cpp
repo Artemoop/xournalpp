@@ -33,6 +33,8 @@
 #include "gui/inputdevices/InputEvents.h"
 #include "util/DeviceListHelper.h"
 
+using std::string;
+
 MainWindow::MainWindow(GladeSearchpath* gladeSearchPath, Control* control):
         GladeGui(gladeSearchPath, "main.glade", "mainWindow") {
     this->control = control;

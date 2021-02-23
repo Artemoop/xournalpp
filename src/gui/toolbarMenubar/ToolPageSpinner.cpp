@@ -9,7 +9,7 @@
 
 #include "i18n.h"
 
-ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type):
+ToolPageSpinner::ToolPageSpinner(GladeGui* gui, ActionHandler* handler, std::string id, ActionType type):
         AbstractToolItem(std::move(id), handler, type, nullptr) {
     this->gui = gui;
     this->pageSpinner = new SpinPageAdapter();
@@ -22,13 +22,13 @@ ToolPageSpinner::~ToolPageSpinner() {
 
 auto ToolPageSpinner::getPageSpinner() -> SpinPageAdapter* { return pageSpinner; }
 
-void ToolPageSpinner::setText(const string& text) {
+void ToolPageSpinner::setText(const std::string& text) {
     if (lbPageNo) {
         gtk_label_set_text(GTK_LABEL(lbPageNo), text.c_str());
     }
 }
 
-auto ToolPageSpinner::getToolDisplayName() -> string { return _("Page number"); }
+auto ToolPageSpinner::getToolDisplayName() -> std::string { return _("Page number"); }
 
 auto ToolPageSpinner::getNewToolIcon() -> GtkWidget* {
     return gtk_image_new_from_icon_name("pageSpinner", GTK_ICON_SIZE_SMALL_TOOLBAR);

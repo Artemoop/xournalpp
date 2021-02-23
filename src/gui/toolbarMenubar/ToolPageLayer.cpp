@@ -10,6 +10,8 @@
 
 #include "i18n.h"
 
+using std::string;
+
 ToolPageLayer::ToolPageLayer(LayerController* lc, GladeGui* gui, ActionHandler* handler, string id, ActionType type):
         AbstractToolItem(std::move(id), handler, type, nullptr), lc(lc), gui(gui), menu(gtk_menu_new()) {
     this->layerLabel = gtk_label_new(_("Loading..."));

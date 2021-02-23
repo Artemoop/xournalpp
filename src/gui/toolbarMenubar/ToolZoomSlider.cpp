@@ -10,7 +10,7 @@
 #include "StringUtils.h"
 #include "i18n.h"
 
-ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, string id, ActionType type, ZoomControl* zoom):
+ToolZoomSlider::ToolZoomSlider(ActionHandler* handler, std::string id, ActionType type, ZoomControl* zoom):
         AbstractToolItem(std::move(id), handler, type, nullptr), zoom(zoom) {
     zoom->addZoomListener(this);
 }
@@ -69,7 +69,7 @@ void ToolZoomSlider::zoomChanged() {
 
 void ToolZoomSlider::zoomRangeValuesChanged() { updateScaleMarks(); }
 
-auto ToolZoomSlider::getToolDisplayName() -> string { return _("Zoom slider"); }
+auto ToolZoomSlider::getToolDisplayName() -> std::string { return _("Zoom slider"); }
 
 auto ToolZoomSlider::getNewToolIcon() -> GtkWidget* {
     return gtk_image_new_from_icon_name("zoom-in", GTK_ICON_SIZE_SMALL_TOOLBAR);

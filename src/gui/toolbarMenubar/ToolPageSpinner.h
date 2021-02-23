@@ -15,20 +15,20 @@
 #include <vector>
 
 #include "AbstractToolItem.h"
-#include "XournalType.h"
+
 
 class GladeGui;
 class SpinPageAdapter;
 
 class ToolPageSpinner: public AbstractToolItem {
 public:
-    ToolPageSpinner(GladeGui* gui, ActionHandler* handler, string id, ActionType type);
+    ToolPageSpinner(GladeGui* gui, ActionHandler* handler, std::string id, ActionType type);
     virtual ~ToolPageSpinner();
 
 public:
     SpinPageAdapter* getPageSpinner();
-    void setText(const string& text);
-    virtual string getToolDisplayName();
+    void setText(const std::string& text);
+    virtual std::string getToolDisplayName();
 
 protected:
     virtual GtkToolItem* newItem();

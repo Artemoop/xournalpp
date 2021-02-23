@@ -44,7 +44,7 @@ public:
     void copyToCliboard();
     void cutToClipboard();
     void pasteFromClipboard();
-    string getSelection();
+    std::string getSelection();
 
     Text* getText();
     void textCopyed();
@@ -55,7 +55,7 @@ public:
 
     UndoAction* getFirstUndoAction();
 
-    void setText(const string& text);
+    void setText(const std::string& text);
     void setFont(XojFont font);
     UndoAction* setColor(Color color);
 
@@ -97,8 +97,8 @@ private:
     Text* text = nullptr;
 
     PangoAttrList* preeditAttrList = nullptr;
-    string preeditString;
-    string lastText;
+    std::string preeditString;
+    std::string lastText;
 
     std::vector<std::reference_wrapper<TextUndoAction>> undoActions;
 

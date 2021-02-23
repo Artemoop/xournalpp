@@ -249,7 +249,7 @@ void ToolbarCustomizeDialog::rebuildIconview() {
             continue;
         }
 
-        string name = item->getToolDisplayName();
+        std::string name = item->getToolDisplayName();
         GtkWidget* icon = item->getNewToolIcon();
         g_return_if_fail(icon != nullptr);
 

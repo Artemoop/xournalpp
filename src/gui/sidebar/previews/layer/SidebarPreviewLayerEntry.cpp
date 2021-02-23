@@ -7,7 +7,7 @@
 
 
 SidebarPreviewLayerEntry::SidebarPreviewLayerEntry(SidebarPreviewBase* sidebar, const PageRef& page, int layer,
-                                                   const string& layerName, size_t index):
+                                                   const std::string& layerName, size_t index):
         SidebarPreviewBaseEntry(sidebar, page),
         index(index),
         layer(layer),

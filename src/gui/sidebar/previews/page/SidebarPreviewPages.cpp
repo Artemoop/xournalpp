@@ -68,9 +68,9 @@ void SidebarPreviewPages::enableSidebar() {
     pageSelected(this->selectedEntry);
 }
 
-auto SidebarPreviewPages::getName() -> string { return _("Page Preview"); }
+auto SidebarPreviewPages::getName() -> std::string { return _("Page Preview"); }
 
-auto SidebarPreviewPages::getIconName() -> string { return "sidebar-page-preview"; }
+auto SidebarPreviewPages::getIconName() -> std::string { return "sidebar-page-preview"; }
 
 /**
  * Called when an action is performed

@@ -17,7 +17,7 @@
 #include <vector>
 
 #include "Job.h"
-#include "XournalType.h"
+
 
 /**
  * @file Scheduler.h
@@ -131,5 +131,5 @@ protected:
     GTimeVal* blockRenderZoomTime = nullptr;
     GMutex blockRenderMutex{};
 
-    string name;
+    std::string name;
 };

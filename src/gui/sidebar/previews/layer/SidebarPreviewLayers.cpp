@@ -56,9 +56,9 @@ void SidebarPreviewLayers::enableSidebar() {
     rebuildLayerMenu();
 }
 
-auto SidebarPreviewLayers::getName() -> string { return _("Layer Preview"); }
+auto SidebarPreviewLayers::getName() -> std::string { return _("Layer Preview"); }
 
-auto SidebarPreviewLayers::getIconName() -> string { return "layer"; }
+auto SidebarPreviewLayers::getIconName() -> std::string { return "layer"; }
 
 void SidebarPreviewLayers::pageSizeChanged(size_t page) {
     if (page != this->lc->getCurrentPageId() || !enabled) {
