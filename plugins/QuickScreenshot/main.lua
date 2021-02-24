@@ -81,7 +81,9 @@ function go()
     for i,command in ipairs(elseUtilities) do
       utilityName = command:match("%S+")
       if existsUtility(utilityName) then
-        local tmpFilename = os.tmpname()
+        local tmpFilename = os.tmpname() .. ".png" 
+        -- The file extension is added in order to avoid the giblib error: no image grabbed
+        -- see https://stackoverflow.com/questions/26326664/scrot-giblib-error-saving-to-file-failed
         local runCommand = assert(io.popen(command .. tmpFilename .. " &"))
         runCommand:read('*all')
         runCommand:close()
