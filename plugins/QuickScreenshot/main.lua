@@ -51,11 +51,10 @@ end
 -- This is the callback that gets executed when the user
 -- activates the plugin via the menu or hotkey.
 --
--- This function calls 'app.saveAs' to create
--- a "Save As" dialog for the user to choose the
--- filename where the image should reside. Then
--- it executes a screenshot utility to capture the
--- region the user selects.
+-- This function executes a screenshot utility to capture
+-- the region the user selects. Then, it calls 'app.saveAs'
+-- to create a "Save As" dialog for the user to choose the
+-- filename where the image should reside.
 function go()
   local windowsUtilities = {} -- list of windows programs here
   local macUtilities = {} -- list of macOS programs here
@@ -88,13 +87,14 @@ function go()
         runCommand:close()
 
         -- Launch the "Save As" dialog
-        local filename = app.saveAs()
+        local filename = app.saveAs("Untitled.png")
         if not filename then
           os.remove(tmpFilename)
           return
         end
 
-        os.rename(tmpFilename, filename)
+	local res, msg = app.glib_rename(tmpFilename, filename)
+        if not res then print(msg) end
         foundUtility = true
         break
       end
